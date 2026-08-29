@@ -1,0 +1,61 @@
+# Test Accounts
+
+These accounts are for local development and assessment testing only. They are created when the Entity Framework Core migrations are applied.
+
+## Administrator
+
+- Email: `admin@example.com`
+- Password: `Admin123!`
+- Role: `Admin`
+- User ID: `aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa`
+
+The administrator can create and update products and can view all orders.
+
+## Customer
+
+- Email: `customer@example.com`
+- Password: `Customer123!`
+- Role: `Customer`
+- User ID: `cccccccc-cccc-cccc-cccc-cccccccccccc`
+
+The customer can list active products, create orders, and view or cancel their own orders.
+
+## Apply the Seed Migration
+
+Run the following command from the solution directory:
+
+```powershell
+dotnet ef database update `
+  --project src/OrderManagement.Infrastructure `
+  --startup-project src/OrderManagement.Api
+```
+
+## Login
+
+Send a `POST` request to `/api/auth/login`.
+
+Administrator request:
+
+```json
+{
+  "email": "admin@example.com",
+  "password": "Admin123!"
+}
+```
+
+Customer request:
+
+```json
+{
+  "email": "customer@example.com",
+  "password": "Customer123!"
+}
+```
+
+Copy the returned JWT and send it with protected requests using:
+
+```text
+Authorization: Bearer <token>
+```
+
+Do not use these credentials in production.
